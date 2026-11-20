@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Coordinadores - CIC UNAM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cic-hc-navy: #002B49;
+            --cic-hc-navy-dark: #001D33;
+            --cic-hc-gold: #C5A059;
+            --cic-hc-gold-dark: #BA8F3A;
+            --cic-hc-gold-tint: #F9F5EB;
+            --cic-hc-bg: #F8F9FA;
+            --cic-hc-surface: #FFFFFF;
+            --cic-hc-text: #212529;
+            --cic-hc-text-secondary: #495057;
+            --cic-hc-border: #DEE2E6;
+            --cic-hc-border-strong: #CED4DA;
+            --cic-hc-transition: 0.25s ease;
+        }
+
+        .cic-hc-wrapper {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--cic-hc-bg);
+            color: var(--cic-hc-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            box-sizing: border-box;
+        }
+
+        .cic-hc-wrapper *, .cic-hc-wrapper *::before, .cic-hc-wrapper *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Encabezado Institucional de Sección */
+        .cic-hc-header-box {
+            background-color: var(--cic-hc-surface);
+            border: 1px solid var(--cic-hc-border);
+            border-top: 4px solid var(--cic-hc-navy);
+            border-radius: 4px;
+            padding: 2.25rem 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .cic-hc-kicker {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--cic-hc-gold-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .cic-hc-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--cic-hc-navy);
+            line-height: 1.25;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.85rem;
+        }
+
+        .cic-hc-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 72px;
+            height: 3px;
+            background-color: var(--cic-hc-gold);
+        }
+
+        .cic-hc-intro {
+            font-size: 1rem;
+            color: var(--cic-hc-text-secondary);
+            max-width: 880px;
+            line-height: 1.7;
+        }
+
+        /* Panel de Controles y Búsqueda */
+        .cic-hc-controls {
+            background-color: var(--cic-hc-surface);
+            border: 1px solid var(--cic-hc-border);
+            border-radius: 4px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .cic-hc-control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .cic-hc-search-group {
+            flex: 1 1 280px;
+        }
+
+        .cic-hc-filter-group {
+            flex: 1 1 240px;
+        }
+
+        .cic-hc-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--cic-hc-navy);
+        }
+
+        .cic-hc-input,
+        .cic-hc-select {
+            width: 100%;
+            height: 40px;
+            padding: 0 0.85rem;
+            font-family: inherit;
+            font-size: 0.92rem;
+            color: var(--cic-hc-text);
+            background-color: var(--cic-hc-bg);
+            border: 1px solid var(--cic-hc-border-strong);
+            border-radius: 4px;
+            transition: border-color var(--cic-hc-transition), background-color var(--cic-hc-transition);
+        }
+
+        .cic-hc-input:focus,
+        .cic-hc-select:focus {
+            outline: none;
+            border-color: var(--cic-hc-navy);
+            background-color: var(--cic-hc-surface);
+        }
+
+        .cic-hc-toggle-group {
+            display: flex;
+            border: 1px solid var(--cic-hc-navy);
+            border-radius: 4px;
+            overflow: hidden;
+            height: 40px;
+        }
+
+        .cic-hc-toggle-btn {
+            background-color: var(--cic-hc-surface);
+            color: var(--cic-hc-navy);
+            border: none;
+            padding: 0 1.1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color var(--cic-hc-transition), color var(--cic-hc-transition);
+            white-space: nowrap;
+        }
+
+        .cic-hc-toggle-btn + .cic-hc-toggle-btn {
+            border-left: 1px solid var(--cic-hc-navy);
+        }
+
+        .cic-hc-toggle-btn:hover {
+            background-color: var(--cic-hc-bg);
+        }
+
+        .cic-hc-toggle-btn.cic-hc-active {
+            background-color: var(--cic-hc-navy);
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        /* Barra de Estado */
+        .cic-hc-status-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--cic-hc-border);
+            font-size: 0.88rem;
+            color: var(--cic-hc-text-secondary);
+        }
+
+        .cic-hc-status-count strong {
+            color: var(--cic-hc-navy);
+            font-weight: 700;
+        }
+
+        .cic-hc-clear-btn {
+            background: none;
+            border: 1px solid var(--cic-hc-border-strong);
+            color: var(--cic-hc-text-secondary);
+            padding: 0.3rem 0.75rem;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--cic-hc-transition);
+            display: none;
+        }
+
+        .cic-hc-clear-btn.cic-hc-visible {
+            display: inline-block;
+        }
+
+        .cic-hc-clear-btn:hover {
+            border-color: var(--cic-hc-navy);
+            color: var(--cic-hc-navy);
+            background-color: var(--cic-hc-surface);
+        }
+
+        /* Cuadrícula de Tarjetas con Retrato Destacado */
+        .cic-hc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .cic-hc-card {
+            background-color: var(--cic-hc-surface);
+            border: 1px solid var(--cic-hc-border);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            transition: transform var(--cic-hc-transition), box-shadow var(--cic-hc-transition), border-color var(--cic-hc-transition);
+        }
+
+        .cic-hc-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 43, 73, 0.12);
+            border-color: var(--cic-hc-gold);
+        }
+
+        /* Retrato Institucional Prominente */
+        .cic-hc-portrait-box {
+            height: 240px;
+            background: linear-gradient(135deg, var(--cic-hc-navy) 0%, var(--cic-hc-navy-dark) 100%);
+            border-bottom: 4px solid var(--cic-hc-gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .cic-hc-portrait-initials {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--cic-hc-gold);
+            letter-spacing: 0.05em;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        }
+
+        .cic-hc-portrait-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 0.35rem 0.9rem;
+            border-radius: 3px;
+            border: 1px solid rgba(197, 160, 89, 0.5);
+        }
+
+        .cic-hc-card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cic-hc-period-tag {
+            display: inline-block;
+            background-color: var(--cic-hc-gold-tint);
+            color: var(--cic-hc-navy);
+            border: 1px solid var(--cic-hc-gold);
+            font-size: 0.76rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.02em;
+            align-self: flex-start;
+        }
+
+        .cic-hc-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--cic-hc-navy);
+            line-height: 1.3;
+            margin-bottom: 0.85rem;
+        }
+
+        .cic-hc-meta {
+            margin-bottom: 0.85rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--cic-hc-border);
+        }
+
+        .cic-hc-discipline {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--cic-hc-gold-dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .cic-hc-institute {
+            font-size: 0.86rem;
+            color: var(--cic-hc-text-secondary);
+            font-weight: 500;
+        }
+
+        .cic-hc-summary {
+            font-size: 0.9rem;
+            color: var(--cic-hc-text);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .cic-hc-card-action {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        .cic-hc-btn-outline {
+            width: 100%;
+            padding: 0.65rem 1rem;
+            background-color: transparent;
+            color: var(--cic-hc-navy);
+            border: 1px solid var(--cic-hc-navy);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.86rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color var(--cic-hc-transition), color var(--cic-hc-transition);
+        }
+
+        .cic-hc-btn-outline:hover {
+            background-color: var(--cic-hc-navy);
+            color: #FFFFFF;
+        }
+
+        /* Vista Línea de Tiempo */
+        .cic-hc-timeline {
+            display: none;
+            position: relative;
+            padding-left: 2.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .cic-hc-timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: var(--cic-hc-navy);
+        }
+
+        .cic-hc-timeline-entry {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .cic-hc-timeline-entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .cic-hc-timeline-marker {
+            position: absolute;
+            left: -2.25rem;
+            top: 1.5rem;
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            background-color: var(--cic-hc-gold);
+            border: 4px solid var(--cic-hc-bg);
+            box-shadow: 0 0 0 2px var(--cic-hc-navy);
+        }
+
+        .cic-hc-timeline-card {
+            background-color: var(--cic-hc-surface);
+            border: 1px solid var(--cic-hc-border);
+            border-left: 4px solid var(--cic-hc-gold);
+            border-radius: 4px;
+            padding: 1.5rem 1.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: flex-start;
+            justify-content: space-between;
+            transition: box-shadow var(--cic-hc-transition);
+        }
+
+        .cic-hc-timeline-card:hover {
+            box-shadow: 0 6px 16px rgba(0, 43, 73, 0.07);
+        }
+
+        .cic-hc-timeline-main {
+            flex: 1 1 540px;
+        }
+
+        .cic-hc-timeline-header-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cic-hc-timeline-period {
+            background-color: var(--cic-hc-navy);
+            color: #FFFFFF;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.25rem 0.7rem;
+            border-radius: 3px;
+            letter-spacing: 0.03em;
+        }
+
+        .cic-hc-timeline-discipline {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--cic-hc-gold-dark);
+            letter-spacing: 0.04em;
+        }
+
+        .cic-hc-timeline-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--cic-hc-navy);
+            margin-bottom: 0.25rem;
+        }
+
+        .cic-hc-timeline-institute {
+            font-size: 0.88rem;
+            color: var(--cic-hc-text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+
+        .cic-hc-timeline-bio {
+            font-size: 0.92rem;
+            color: var(--cic-hc-text);
+            line-height: 1.65;
+        }
+
+        .cic-hc-timeline-aside {
+            flex: 0 0 auto;
+            align-self: center;
+        }
+
+        /* Estado Vacío */
+        .cic-hc-empty {
+            display: none;
+            background-color: var(--cic-hc-surface);
+            border: 1px solid var(--cic-hc-border);
+            border-top: 3px solid var(--cic-hc-gold);
+            border-radius: 4px;
+            padding: 3.5rem 1.5rem;
+            text-align: center;
+        }
+
+        .cic-hc-empty h3 {
+            font-size: 1.2rem;
+            color: var(--cic-hc-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .cic-hc-empty p {
+            font-size: 0.92rem;
+            color: var(--cic-hc-text-secondary);
+            max-width: 460px;
+            margin: 0 auto 1.25rem auto;
+        }
+
+        /* Ventana Modal de Semblanza */
+        .cic-hc-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 29, 51, 0.7);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.22s ease;
+        }
+
+        .cic-hc-modal-backdrop.cic-hc-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .cic-hc-modal-dialog {
+            background-color: var(--cic-hc-surface);
+            border-radius: 4px;
+            border-top: 5px solid var(--cic-hc-gold);
+            max-width: 760px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            transform: translateY(10px);
+            transition: transform 0.22s ease;
+        }
+
+        .cic-hc-modal-backdrop.cic-hc-open .cic-hc-modal-dialog {
+            transform: translateY(0);
+        }
+
+        .cic-hc-modal-header {
+            background-color: var(--cic-hc-navy);
+            color: #FFFFFF;
+            padding: 1.75rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid var(--cic-hc-gold);
+        }
+
+        .cic-hc-modal-identity {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+            flex: 1 1 420px;
+        }
+
+        .cic-hc-modal-avatar {
+            width: 82px;
+            height: 96px;
+            background-color: var(--cic-hc-navy-dark);
+            border: 2px solid var(--cic-hc-gold);
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .cic-hc-modal-avatar span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cic-hc-gold);
+        }
+
+        .cic-hc-modal-period-pill {
+            display: inline-block;
+            background-color: var(--cic-hc-gold);
+            color: var(--cic-hc-navy-dark);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.2rem 0.65rem;
+            border-radius: 3px;
+            margin-bottom: 0.45rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .cic-hc-modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.25;
+            color: #FFFFFF;
+            margin-bottom: 0.25rem;
+        }
+
+        .cic-hc-modal-subtitle {
+            font-size: 0.9rem;
+            color: #E2E8F0;
+        }
+
+        .cic-hc-modal-close-top {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            color: #FFFFFF;
+            padding: 0.45rem 0.95rem;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color var(--cic-hc-transition), border-color var(--cic-hc-transition);
+        }
+
+        .cic-hc-modal-close-top:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            border-color: #FFFFFF;
+        }
+
+        .cic-hc-modal-content {
+            padding: 2rem;
+        }
+
+        .cic-hc-modal-block {
+            margin-bottom: 1.65rem;
+        }
+
+        .cic-hc-modal-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .cic-hc-modal-block-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--cic-hc-navy);
+            border-bottom: 1px solid var(--cic-hc-border);
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .cic-hc-modal-text {
+            font-size: 0.96rem;
+            color: var(--cic-hc-text);
+            line-height: 1.72;
+        }
+
+        .cic-hc-modal-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .cic-hc-modal-list li {
+            position: relative;
+            padding-left: 1.15rem;
+            font-size: 0.93rem;
+            color: var(--cic-hc-text);
+            line-height: 1.55;
+        }
+
+        .cic-hc-modal-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55rem;
+            width: 6px;
+            height: 6px;
+            background-color: var(--cic-hc-gold-dark);
+        }
+
+        .cic-hc-modal-footer-bar {
+            background-color: var(--cic-hc-bg);
+            border-top: 1px solid var(--cic-hc-border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .cic-hc-btn-solid {
+            background-color: var(--cic-hc-navy);
+            color: #FFFFFF;
+            border: none;
+            padding: 0.6rem 1.35rem;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.86rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color var(--cic-hc-transition);
+        }
+
+        .cic-hc-btn-solid:hover {
+            background-color: var(--cic-hc-navy-dark);
+        }
+
+        @media (max-width: 768px) {
+            .cic-hc-wrapper {
+                padding: 1rem 0.5rem;
+            }
+            .cic-hc-header-box {
+                padding: 1.5rem;
+            }
+            .cic-hc-title {
+                font-size: 1.65rem;
+            }
+            .cic-hc-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .cic-hc-toggle-group {
+                width: 100%;
+            }
+            .cic-hc-toggle-btn {
+                flex: 1;
+            }
+            .cic-hc-grid {
+                grid-template-columns: 1fr;
+            }
+            .cic-hc-modal-header {
+                padding: 1.35rem;
+            }
+            .cic-hc-modal-content {
+                padding: 1.35rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cic-hc-wrapper">
+        
+        <!-- Encabezado Institucional de Sección -->
+        <header class="cic-hc-header-box">
+            <span class="cic-hc-kicker">Coordinación de la Investigación Científica</span>
+            <h1 class="cic-hc-title" id="cic-hc-heading">Histórico de Coordinadores</h1>
+            <p class="cic-hc-intro">
+                Desde su creación en 1945, la Coordinación de la Investigación Científica (CIC) de la Universidad Nacional Autónoma de México ha sido encabezada por destacadas personalidades de la ciencia nacional, cuya labor ha impulsado el desarrollo institucional, la descentralización de los polos científicos y el fortalecimiento de los institutos, centros y programas del Subsistema de la Investigación Científica.
+            </p>
+        </header>
+
+        <!-- Barra de Controles y Filtrado -->
+        <div class="cic-hc-controls" role="region" aria-label="Herramientas de filtrado y visualización">
+            <div class="cic-hc-control-group cic-hc-search-group">
+                <label for="cic-hc-search-input" class="cic-hc-label">Búsqueda por nombre, periodo o entidad</label>
+                <input 
+                    type="text" 
+                    id="cic-hc-search-input" 
+                    class="cic-hc-input" 
+                    placeholder="Ej. Sandoval Vallarta, 1985, Astronomía, Biotecnología..."
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="cic-hc-control-group cic-hc-filter-group">
+                <label for="cic-hc-era-select" class="cic-hc-label">Filtrar por época histórica</label>
+                <select id="cic-hc-era-select" class="cic-hc-select">
+                    <option value="all">Todas las épocas (1945 - Actualidad)</option>
+                    <option value="xxi">Siglo XXI (2000 - Actualidad)</option>
+                    <option value="late-xx">Finales del Siglo XX (1970 - 1999)</option>
+                    <option value="foundation">Fundación y Consolidación (1945 - 1969)</option>
+                </select>
+            </div>
+
+            <div class="cic-hc-control-group">
+                <span class="cic-hc-label">Modo de visualización</span>
+                <div class="cic-hc-toggle-group" role="group" aria-label="Selector de vista">
+                    <button type="button" class="cic-hc-toggle-btn cic-hc-active" id="cic-hc-btn-grid" aria-pressed="true">
+                        Vista en Cuadrícula
+                    </button>
+                    <button type="button" class="cic-hc-toggle-btn" id="cic-hc-btn-timeline" aria-pressed="false">
+                        Línea de Tiempo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra de Estado -->
+        <div class="cic-hc-status-bar">
+            <div class="cic-hc-status-count" id="cic-hc-results-counter">
+                Mostrando <strong>0</strong> coordinadores
+            </div>
+            <button type="button" class="cic-hc-clear-btn" id="cic-hc-btn-clear">
+                Limpiar filtros
+            </button>
+        </div>
+
+        <!-- Contenedor Vista Cuadrícula -->
+        <div class="cic-hc-grid" id="cic-hc-grid-view"></div>
+
+        <!-- Contenedor Vista Línea de Tiempo -->
+        <div class="cic-hc-timeline" id="cic-hc-timeline-view"></div>
+
+        <!-- Estado sin resultados -->
+        <div class="cic-hc-empty" id="cic-hc-empty-state">
+            <h3>No se encontraron registros coincidentes</h3>
+            <p>Ningún titular de la Coordinación coincide con los términos de búsqueda o la época seleccionada.</p>
+            <button type="button" class="cic-hc-btn-solid" id="cic-hc-btn-empty-reset">Restablecer búsqueda</button>
+        </div>
+
+    </div>
+
+    <!-- Ventana Modal de Semblanza -->
+    <div class="cic-hc-modal-backdrop" id="cic-hc-modal" role="dialog" aria-modal="true" aria-labelledby="cic-hc-modal-coord-name">
+        <div class="cic-hc-modal-dialog">
+            <div class="cic-hc-modal-header">
+                <div class="cic-hc-modal-identity">
+                    <div class="cic-hc-modal-avatar" aria-hidden="true">
+                        <span id="cic-hc-modal-initials">UNAM</span>
+                    </div>
+                    <div>
+                        <span class="cic-hc-modal-period-pill" id="cic-hc-modal-period"></span>
+                        <h2 class="cic-hc-modal-title" id="cic-hc-modal-coord-name"></h2>
+                        <div class="cic-hc-modal-subtitle" id="cic-hc-modal-coord-discipline"></div>
+                    </div>
+                </div>
+                <button type="button" class="cic-hc-modal-close-top" id="cic-hc-modal-close-top" aria-label="Cerrar semblanza">
+                    Cerrar
+                </button>
+            </div>
+
+            <div class="cic-hc-modal-content">
+                <div class="cic-hc-modal-block">
+                    <h3 class="cic-hc-modal-block-title">Entidad Académica de Adscripción</h3>
+                    <p class="cic-hc-modal-text" id="cic-hc-modal-institute"></p>
+                </div>
+
+                <div class="cic-hc-modal-block">
+                    <h3 class="cic-hc-modal-block-title">Semblanza Biográfica y Académica</h3>
+                    <p class="cic-hc-modal-text" id="cic-hc-modal-biography"></p>
+                </div>
+
+                <div class="cic-hc-modal-block">
+                    <h3 class="cic-hc-modal-block-title">Principales Aportaciones y Gestión en la CIC</h3>
+                    <ul class="cic-hc-modal-list" id="cic-hc-modal-contributions"></ul>
+                </div>
+            </div>
+
+            <div class="cic-hc-modal-footer-bar">
+                <button type="button" class="cic-hc-btn-solid" id="cic-hc-modal-close-bottom">Cerrar semblanza</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Registro histórico de los 19 titulares de la Coordinación de la Investigación Científica (UNAM)
+        const cicHcData = [
+            {
+                id: 1,
+                name: "Dra. María Soledad Funes Argüello",
+                initials: "SF",
+                period: "2024 - Actualidad",
+                era: "xxi",
+                discipline: "Biología Molecular y Bioquímica",
+                institute: "Instituto de Fisiología Celular",
+                summary: "Investigadora titular especializada en biogénesis mitocondrial y metabolismo celular. Encabeza el fortalecimiento interdisciplinario y la equidad en el Subsistema de la Investigación Científica.",
+                biography: "Doctora en Ciencias Biomédicas por la UNAM con estancia posdoctoral en la Universidad de Múnich, Alemania. Antes de asumir la titularidad de la Coordinación de la Investigación Científica, se desempeñó como directora del Instituto de Fisiología Celular, destacando por su impulso a la investigación básica de frontera y la formación de recursos humanos altamente especializados.",
+                contributions: [
+                    "Impulso a proyectos interdisciplinarios entre institutos y centros del subsistema científico.",
+                    "Fortalecimiento de políticas institucionales de igualdad de género y apoyo a jóvenes investigadores.",
+                    "Vinculación estratégica del quehacer científico universitario con problemáticas nacionales prioritarias."
+                ]
+            },
+            {
+                id: 2,
+                name: "Dr. William Henry Lee Alardín",
+                initials: "WL",
+                period: "2015 - 2024",
+                era: "xxi",
+                discipline: "Astrofísica y Astronomía",
+                institute: "Instituto de Astronomía",
+                summary: "Astrofísico especialista en fenómenos de altas energías. Durante dos periodos impulsó la supercomputación, la instrumentación astronómica y la articulación científica ante emergencias sanitarias.",
+                biography: "Físico por la UNAM y Doctor en Astronomía por la Universidad de Wisconsin-Madison. Fue director del Instituto de Astronomía (2008-2015) antes de ser designado Coordinador de la Investigación Científica durante dos periodos consecutivos, consolidando grandes proyectos de observación e infraestructura nacional.",
+                contributions: [
+                    "Consolidación de laboratorios nacionales y capacidades de supercómputo universitario.",
+                    "Coordinación de la respuesta científica y diagnóstica de los institutos de la UNAM durante la pandemia de COVID-19.",
+                    "Fortalecimiento de la cooperación científica internacional y consorcios observacionales."
+                ]
+            },
+            {
+                id: 3,
+                name: "Dr. Carlos Arámburo de la Hoz",
+                initials: "CA",
+                period: "2007 - 2015",
+                era: "xxi",
+                discipline: "Neurobiología y Endocrinología",
+                institute: "Instituto de Neurobiología",
+                summary: "Pionero en el estudio de la neuroendocrinología comparada. Su gestión consolidó los polos de desarrollo científico fuera de Ciudad Universitaria, especialmente en el campus Juriquilla.",
+                biography: "Químico Farmacéutico Biólogo y Doctor en Ciencias Biomédicas por la UNAM, con posdoctorado en la Universidad de Rutgers. Director fundador del Instituto de Neurobiología en Querétaro, impulsó decididamente la descentralización de la investigación científica universitaria.",
+                contributions: [
+                    "Consolidación de los polos regionales de investigación en Querétaro, Morelia, Mérida y Ensenada.",
+                    "Creación de nuevos centros de investigación y unidades multidisciplinarias.",
+                    "Modernización de los marcos normativos y de evaluación académica del subsistema."
+                ]
+            },
+            {
+                id: 4,
+                name: "Dr. René Raúl Drucker Colín",
+                initials: "RD",
+                period: "2000 - 2007",
+                era: "xxi",
+                discipline: "Neurociencias y Fisiología",
+                institute: "Instituto de Fisiología Celular",
+                summary: "Reconocido neurofisiólogo por sus investigaciones sobre la neurobiología del sueño y los trasplantes cerebrales. Impulsó vigorosamente la divulgación científica en la UNAM.",
+                biography: "Psicólogo por la UNAM, Maestro en Ciencias por la Universidad del Norte de Illinois y Doctor en Fisiología por la Universidad de Saskatchewan. Premio Nacional de Ciencias y Artes, fue un incansable promotor de la cultura científica en México.",
+                contributions: [
+                    "Creación de programas institucionales de divulgación de la ciencia y publicaciones periódicas.",
+                    "Impulso a la renovación generacional de la planta académica mediante programas de incorporación.",
+                    "Fortalecimiento presupuestal y de equipamiento mayor para laboratorios universitarios."
+                ]
+            },
+            {
+                id: 5,
+                name: "Dr. Francisco Gonzalo Bolívar Zapata",
+                initials: "FB",
+                period: "1997 - 2000",
+                era: "late-xx",
+                discipline: "Biotecnología e Ingeniería Genética",
+                institute: "Instituto de Biotecnología",
+                summary: "Pionero mundial de la biología molecular y la ingeniería genética. Su titularidad fortaleció la vinculación tecnológica, la bioética y la propiedad intelectual universitaria.",
+                biography: "Químico y Doctor en Bioquímica por la UNAM. Participó en la síntesis de genes humanos para la producción de insulina y somatostatina. Director fundador del Instituto de Biotecnología en Cuernavaca y galardonado con el Premio Príncipe de Asturias.",
+                contributions: [
+                    "Establecimiento de lineamientos institucionales sobre bioseguridad y biotecnología moderna.",
+                    "Fomento a la transferencia de tecnología y protección de patentes desarrolladas en la UNAM.",
+                    "Consolidación del campus Morelos como referente nacional en biociencias."
+                ]
+            },
+            {
+                id: 6,
+                name: "Dr. Gerardo Suárez Reynoso",
+                initials: "GS",
+                period: "1993 - 1997",
+                era: "late-xx",
+                discipline: "Sismología y Geofísica",
+                institute: "Instituto de Geofísica",
+                summary: "Sismólogo destacado por el estudio de la tectónica y el peligro sísmico en México. Impulsó la modernización instrumental de las redes de observación geofísica.",
+                biography: "Ingeniero Geofísico por la UNAM y Doctor en Sismología por el Instituto Tecnológico de Massachusetts (MIT). Director del Instituto de Geofísica y responsable de la modernización del Servicio Sismológico Nacional tras los sismos de 1985.",
+                contributions: [
+                    "Modernización tecnológica e instrumental del Servicio Sismológico Nacional.",
+                    "Impulso a programas de investigación sobre prevención de desastres y ciencias de la Tierra.",
+                    "Fortalecimiento de la vinculación académica con organismos internacionales de geofísica."
+                ]
+            },
+            {
+                id: 7,
+                name: "Dr. Luis Esteva Maraboto",
+                initials: "LE",
+                period: "1991 - 1993",
+                era: "late-xx",
+                discipline: "Ingeniería Sísmica y Estructural",
+                institute: "Instituto de Ingeniería",
+                summary: "Investigador emérito reconocido internacionalmente por sus aportaciones a la confiabilidad estructural y el diseño sísmico. Promovió la articulación entre ciencia básica e ingeniería.",
+                biography: "Ingeniero Civil y Doctor en Ingeniería por la UNAM, con estudios de posgrado en el MIT. Sus investigaciones definieron los criterios modernos de reglamentos de construcción sismorresistente en América Latina.",
+                contributions: [
+                    "Integración estrecha entre la investigación básica y el desarrollo tecnológico aplicado.",
+                    "Impulso a la formación de posgrados de excelencia en ciencias físicas e ingenierías.",
+                    "Apoyo a proyectos estratégicos de infraestructura nacional desde la Universidad."
+                ]
+            },
+            {
+                id: 8,
+                name: "Dr. Juan Ramón de la Fuente Ramírez",
+                initials: "JR",
+                period: "1989 - 1991",
+                era: "late-xx",
+                discipline: "Ciencias Médicas y Psiquiatría",
+                institute: "Facultad de Medicina",
+                summary: "Médico investigador y posteriormente Rector de la UNAM. Durante su paso por la Coordinación promovió la articulación entre la investigación biomédica y las ciencias exactas.",
+                biography: "Médico Cirujano por la UNAM con especialización en psiquiatría en la Clínica Mayo. Premio Nacional de Ciencias y Artes, encabezó la CIC antes de dirigir la Facultad de Medicina y ocupar la Rectoría de la Universidad (1999-2007).",
+                contributions: [
+                    "Fortalecimiento de los cuerpos colegiados y comités dictaminadores del subsistema.",
+                    "Promoción de programas conjuntos entre facultades e institutos de investigación.",
+                    "Impulso a la proyección internacional de la producción científica universitaria."
+                ]
+            },
+            {
+                id: 9,
+                name: "Dr. José Sarukhán Kermez",
+                initials: "JS",
+                period: "1987 - 1988",
+                era: "late-xx",
+                discipline: "Ecología y Biodiversidad",
+                institute: "Instituto de Ecología",
+                summary: "Ecólogo eminente, fundador del Instituto de Ecología y posteriormente Rector de la UNAM. Sentó las bases institucionales para el estudio de la biodiversidad en México.",
+                biography: "Biólogo por la UNAM y Doctor en Ecología por la Universidad de Gales. Investigador Emérito de la UNAM y Premio Tyler de Logro Ambiental, dirigió la CIC previo a su designación como Rector de la Universidad (1989-1997).",
+                contributions: [
+                    "Consolidación de las ciencias ambientales y ecológicas dentro del subsistema científico.",
+                    "Impulso a las estaciones de biología tropical y reservas ecológicas universitarias.",
+                    "Fomento a la descentralización académica hacia los estados de la República."
+                ]
+            },
+            {
+                id: 10,
+                name: "Dr. Arcadio Poveda Ricalde",
+                initials: "AP",
+                period: "1985 - 1987",
+                era: "late-xx",
+                discipline: "Astronomía y Astrofísica",
+                institute: "Instituto de Astronomía",
+                summary: "Astrofísico célebre por desarrollar el método Poveda para determinar la masa de galaxias elípticas. Impulsó el desarrollo de observatorios astronómicos nacionales.",
+                biography: "Estudió física y matemáticas en la UNAM y obtuvo el doctorado en Astronomía en la Universidad de California en Berkeley. Investigador Emérito y Premio Nacional de Ciencias, fue pieza clave en el desarrollo de San Pedro Mártir.",
+                contributions: [
+                    "Consolidación del Observatorio Astronómico Nacional en San Pedro Mártir, Baja California.",
+                    "Impulso al desarrollo de instrumentación óptica y electrónica hecha en México.",
+                    "Apoyo institucional al subsistema científico tras los sismos de 1985."
+                ]
+            },
+            {
+                id: 11,
+                name: "Dr. Héctor Mayagoitia Domínguez",
+                initials: "HM",
+                period: "1985",
+                era: "late-xx",
+                discipline: "Química y Ciencias del Suelo",
+                institute: "Facultad de Química",
+                summary: "Químico bacteriólogo y gestor de políticas científicas nacionales. Contribuyó a la vinculación de la investigación universitaria con el sistema nacional de ciencia y tecnología.",
+                biography: "Químico Bacteriólogo y Parasitólogo por el IPN con estudios de posgrado en edafología en la Universidad de Rutgers. Ocupó importantes responsabilidades en la planeación científica y educativa del país antes de colaborar en la CIC.",
+                contributions: [
+                    "Fortalecimiento de los vínculos entre la UNAM y el Consejo Nacional de Ciencia y Tecnología.",
+                    "Impulso a programas de investigación en recursos naturales y ciencias agropecuarias."
+                ]
+            },
+            {
+                id: 12,
+                name: "Dr. Jaime Martuscelli Quintana",
+                initials: "JM",
+                period: "1981 - 1985",
+                era: "late-xx",
+                discipline: "Bioquímica y Genética Microbiana",
+                institute: "Instituto de Investigaciones Biomédicas",
+                summary: "Bioquímico y promotor del desarrollo institucional. Impulsó la creación de centros multidisciplinarios y los mecanismos de estímulo a la productividad científica.",
+                biography: "Médico Cirujano por la UNAM y Doctor en Bioquímica por la Universidad de Colorado. Director del Instituto de Investigaciones Biomédicas, dedicó su trayectoria a fortalecer la estructura organizacional de la ciencia universitaria.",
+                contributions: [
+                    "Promoción de unidades foráneas de investigación para desconcentrar la actividad científica.",
+                    "Participación clave en la estructuración de programas de estímulos a investigadores.",
+                    "Fortalecimiento del posgrado en ciencias biomédicas y químicas."
+                ]
+            },
+            {
+                id: 13,
+                name: "Dr. Agustín Ayala Castañares",
+                initials: "AA",
+                period: "1973 - 1981",
+                era: "late-xx",
+                discipline: "Ciencias del Mar y Micropaleontología",
+                institute: "Instituto de Ciencias del Mar y Limnología",
+                summary: "Pionero de las ciencias marinas en México. Durante sus ocho años de gestión expandió notablemente el número de institutos y centros de la Coordinación.",
+                biography: "Biólogo y Doctor en Ciencias por la UNAM, con estudios en la Universidad de Stanford. Director fundador del Instituto de Ciencias del Mar y Limnología, impulsó la adquisición de buques oceanográficos para la Universidad.",
+                contributions: [
+                    "Creación e incorporación de nuevos institutos y centros de investigación científica.",
+                    "Impulso decisivo a la oceanografía mexicana y adquisición de embarcaciones de investigación.",
+                    "Consolidación de la infraestructura física de la Ciudad de la Investigación Científica."
+                ]
+            },
+            {
+                id: 14,
+                name: "Dr. Guillermo Soberón Acevedo",
+                initials: "GS",
+                period: "1971 - 1973",
+                era: "late-xx",
+                discipline: "Bioquímica",
+                institute: "Instituto de Investigaciones Biomédicas",
+                summary: "Bioquímico eminente y Rector de la UNAM (1973-1981). Como Coordinador inició la transformación estructural y el crecimiento moderno del subsistema científico.",
+                biography: "Médico Cirujano por la UNAM y Doctor en Química Fisiológica por la Universidad de Wisconsin. Director del Instituto de Investigaciones Biomédicas y Premio Nacional de Ciencias, proyectó la expansión de la investigación universitaria.",
+                contributions: [
+                    "Planeación estratégica de la Ciudad de la Investigación Científica en Ciudad Universitaria.",
+                    "Profesionalización de la carrera académica del investigador de tiempo completo.",
+                    "Impulso a la creación de centros especializados en áreas emergentes de la ciencia."
+                ]
+            },
+            {
+                id: 15,
+                name: "Dr. Emilio Rosenblueth Deutsch",
+                initials: "ER",
+                period: "1966 - 1970",
+                era: "foundation",
+                discipline: "Ingeniería Sísmica",
+                institute: "Instituto de Ingeniería",
+                summary: "Uno de los fundadores de la ingeniería sísmica moderna a nivel mundial. Impulsó el rigor matemático, la computación científica y la excelencia académica en la CIC.",
+                biography: "Ingeniero Civil por la UNAM y Doctor por la Universidad de Illinois en Urbana-Champaign. Director del Instituto de Ingeniería, Investigador Emérito y Premio Nacional de Ciencias, transformó la investigación en ingeniería en México.",
+                contributions: [
+                    "Incorporación de métodos probabilísticos y cómputo electrónico en la investigación universitaria.",
+                    "Elevación de los estándares internacionales de publicación y rigor científico en la UNAM.",
+                    "Fomento a la formación doctoral de jóvenes investigadores en el extranjero y su reincorporación."
+                ]
+            },
+            {
+                id: 16,
+                name: "Dr. Ignacio González Guzmán",
+                initials: "IG",
+                period: "1961 - 1966",
+                era: "foundation",
+                discipline: "Hematología y Citología",
+                institute: "Instituto de Estudios Médicos y Biológicos",
+                summary: "Médico hematólogo y citólogo de prestigio internacional. Consolidó la investigación biomédica experimental dentro de la Coordinación de la Investigación Científica.",
+                biography: "Médico Cirujano por la Escuela Nacional de Medicina de la UNAM. Fundador del Instituto de Estudios Médicos y Biológicos (hoy Instituto de Investigaciones Biomédicas), miembro de El Colegio Nacional y Premio Nacional de Ciencias.",
+                contributions: [
+                    "Consolidación de la investigación biomédica y experimental en Ciudad Universitaria.",
+                    "Creación de colecciones y laboratorios especializados en citología y hematología.",
+                    "Articulación de la investigación médica con las ciencias biológicas básicas."
+                ]
+            },
+            {
+                id: 17,
+                name: "Dr. Alberto Barajas Celis",
+                initials: "AB",
+                period: "1957 - 1961",
+                era: "foundation",
+                discipline: "Matemáticas y Física Teórica",
+                institute: "Instituto de Matemáticas",
+                summary: "Matemático fundador de la escuela mexicana de matemáticas modernas y colaborador de George Birkhoff en gravitación. Consolidó los institutos en la nueva Ciudad Universitaria.",
+                biography: "Maestro y Doctor en Ciencias Matemáticas por la UNAM, con estancias en la Universidad de Harvard. Fue director de la Facultad de Ciencias y figura central en el traslado y organización de los institutos científicos en el Pedregal.",
+                contributions: [
+                    "Organización académica de los institutos científicos tras su traslado a Ciudad Universitaria.",
+                    "Impulso a la investigación en matemáticas puras y aplicadas en México.",
+                    "Formación de múltiples generaciones de físicos y matemáticos universitarios."
+                ]
+            },
+            {
+                id: 18,
+                name: "Dr. Carlos Graef Fernández",
+                initials: "CG",
+                period: "1946 - 1957",
+                era: "foundation",
+                discipline: "Física Teórica y Gravitación",
+                institute: "Instituto de Física",
+                summary: "Físico y matemático reconocido por sus trabajos en relatividad y gravitación. Encabezó la Coordinación durante once años, guiando la transición hacia Ciudad Universitaria.",
+                biography: "Ingeniero y Doctor en Física por el Instituto Tecnológico de Massachusetts (MIT). Director del Instituto de Física y de la Facultad de Ciencias, fue el segundo titular de la CIC y artífice de su consolidación institucional temprana.",
+                contributions: [
+                    "Conducción del traslado de los institutos científicos hacia la nueva Ciudad Universitaria.",
+                    "Impulso a la física nuclear y adquisición del primer acelerador Van de Graaff en América Latina.",
+                    "Fortalecimiento institucional de los primeros institutos de investigación de la UNAM."
+                ]
+            },
+            {
+                id: 19,
+                name: "Dr. Manuel Sandoval Vallarta",
+                initials: "MS",
+                period: "1945 - 1946",
+                era: "foundation",
+                discipline: "Física Teórica y Rayos Cósmicos",
+                institute: "Instituto de Física",
+                summary: "Primer Coordinador de la Investigación Científica de la UNAM (1945). Físico de talla mundial célebre por sus investigaciones sobre la radiación cósmica.",
+                biography: "Doctor en Ciencias por el Instituto Tecnológico de Massachusetts (MIT), donde fue profesor de figuras como Richard Feynman. Al promulgarse la Ley Orgánica de la UNAM de 1945, fue designado primer titular de la Coordinación de la Investigación Científica.",
+                contributions: [
+                    "Organización fundacional de la Coordinación de la Investigación Científica conforme a la Ley Orgánica de 1945.",
+                    "Establecimiento de las bases colegiadas del Consejo Técnico de la Investigación Científica.",
+                    "Proyección internacional de la física mexicana mediante estudios pioneros sobre rayos cósmicos."
+                ]
+            }
+        ];
+
+        // Estado de la interfaz
+        let cicHcCurrentView = 'grid';
+        let cicHcSelectedEra = 'all';
+        let cicHcSearchTerm = '';
+
+        // Referencias DOM con prefijo único
+        const cicHcGridViewEl = document.getElementById('cic-hc-grid-view');
+        const cicHcTimelineViewEl = document.getElementById('cic-hc-timeline-view');
+        const cicHcEmptyStateEl = document.getElementById('cic-hc-empty-state');
+        const cicHcCounterEl = document.getElementById('cic-hc-results-counter');
+        const cicHcSearchInputEl = document.getElementById('cic-hc-search-input');
+        const cicHcEraSelectEl = document.getElementById('cic-hc-era-select');
+        const cicHcBtnGridEl = document.getElementById('cic-hc-btn-grid');
+        const cicHcBtnTimelineEl = document.getElementById('cic-hc-btn-timeline');
+        const cicHcBtnClearEl = document.getElementById('cic-hc-btn-clear');
+        const cicHcBtnEmptyResetEl = document.getElementById('cic-hc-btn-empty-reset');
+
+        // Referencias Modal
+        const cicHcModalEl = document.getElementById('cic-hc-modal');
+        const cicHcModalInitialsEl = document.getElementById('cic-hc-modal-initials');
+        const cicHcModalPeriodEl = document.getElementById('cic-hc-modal-period');
+        const cicHcModalNameEl = document.getElementById('cic-hc-modal-coord-name');
+        const cicHcModalDisciplineEl = document.getElementById('cic-hc-modal-coord-discipline');
+        const cicHcModalInstituteEl = document.getElementById('cic-hc-modal-institute');
+        const cicHcModalBioEl = document.getElementById('cic-hc-modal-biography');
+        const cicHcModalContributionsEl = document.getElementById('cic-hc-modal-contributions');
+        const cicHcModalCloseTopEl = document.getElementById('cic-hc-modal-close-top');
+        const cicHcModalCloseBottomEl = document.getElementById('cic-hc-modal-close-bottom');
+
+        // Normalización insensible a acentos
+        function cicHcNormalize(str) {
+            return str
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "");
+        }
+
+        // Renderizado general
+        function cicHcRender() {
+            const query = cicHcNormalize(cicHcSearchTerm.trim());
+
+            const filtered = cicHcData.filter(item => {
+                const matchesEra = cicHcSelectedEra === 'all' || item.era === cicHcSelectedEra;
+                if (!matchesEra) return false;
+
+                if (query === '') return true;
+
+                const textBlob = cicHcNormalize(
+                    `${item.name} ${item.period} ${item.discipline} ${item.institute} ${item.summary}`
+                );
+                return textBlob.includes(query);
+            });
+
+            // Actualizar contador
+            const total = filtered.length;
+            cicHcCounterEl.innerHTML = `Mostrando <strong>${total}</strong> ${total === 1 ? 'coordinador' : 'coordinadores'}`;
+
+            // Botón limpiar
+            if (cicHcSelectedEra !== 'all' || cicHcSearchTerm.trim() !== '') {
+                cicHcBtnClearEl.classList.add('cic-hc-visible');
+            } else {
+                cicHcBtnClearEl.classList.remove('cic-hc-visible');
+            }
+
+            // Estado vacío
+            if (total === 0) {
+                cicHcGridViewEl.style.display = 'none';
+                cicHcTimelineViewEl.style.display = 'none';
+                cicHcEmptyStateEl.style.display = 'block';
+                return;
+            }
+
+            cicHcEmptyStateEl.style.display = 'none';
+
+            if (cicHcCurrentView === 'grid') {
+                cicHcGridViewEl.style.display = 'grid';
+                cicHcTimelineViewEl.style.display = 'none';
+                cicHcRenderGrid(filtered);
+            } else {
+                cicHcGridViewEl.style.display = 'none';
+                cicHcTimelineViewEl.style.display = 'block';
+                cicHcRenderTimeline(filtered);
+            }
+        }
+
+        function cicHcRenderGrid(list) {
+            cicHcGridViewEl.innerHTML = list.map(person => `
+                <article class="cic-hc-card">
+                    <div>
+                        <div class="cic-hc-portrait-box">
+                            <span class="cic-hc-portrait-initials">${person.initials}</span>
+                            <span class="cic-hc-portrait-badge">Retrato Institucional</span>
+                        </div>
+                        <div class="cic-hc-card-content">
+                            <span class="cic-hc-period-tag">${person.period}</span>
+                            <h2 class="cic-hc-name">${person.name}</h2>
+                            <div class="cic-hc-meta">
+                                <div class="cic-hc-discipline">${person.discipline}</div>
+                                <div class="cic-hc-institute">${person.institute}</div>
+                            </div>
+                            <p class="cic-hc-summary">${person.summary}</p>
+                        </div>
+                    </div>
+                    <div class="cic-hc-card-action">
+                        <button type="button" class="cic-hc-btn-outline" data-cic-hc-id="${person.id}">
+                            Consultar semblanza
+                        </button>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function cicHcRenderTimeline(list) {
+            cicHcTimelineViewEl.innerHTML = list.map(person => `
+                <article class="cic-hc-timeline-entry">
+                    <div class="cic-hc-timeline-marker" aria-hidden="true"></div>
+                    <div class="cic-hc-timeline-card">
+                        <div class="cic-hc-timeline-main">
+                            <div class="cic-hc-timeline-header-row">
+                                <span class="cic-hc-timeline-period">${person.period}</span>
+                                <span class="cic-hc-timeline-discipline">${person.discipline}</span>
+                            </div>
+                            <h2 class="cic-hc-timeline-name">${person.name}</h2>
+                            <div class="cic-hc-timeline-institute">${person.institute}</div>
+                            <p class="cic-hc-timeline-bio">${person.summary}</p>
+                        </div>
+                        <div class="cic-hc-timeline-aside">
+                            <button type="button" class="cic-hc-btn-outline" data-cic-hc-id="${person.id}">
+                                Consultar semblanza
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // Modal de Semblanza
+        function cicHcOpenModal(id) {
+            const person = cicHcData.find(item => item.id === Number(id));
+            if (!person) return;
+
+            cicHcModalInitialsEl.textContent = person.initials;
+            cicHcModalPeriodEl.textContent = `Periodo: ${person.period}`;
+            cicHcModalNameEl.textContent = person.name;
+            cicHcModalDisciplineEl.textContent = person.discipline;
+            cicHcModalInstituteEl.textContent = person.institute;
+            cicHcModalBioEl.textContent = person.biography;
+
+            cicHcModalContributionsEl.innerHTML = person.contributions
+                .map(point => `<li>${point}</li>`)
+                .join('');
+
+            cicHcModalEl.classList.add('cic-hc-open');
+            document.body.style.overflow = 'hidden';
+            cicHcModalCloseTopEl.focus();
+        }
+
+        function cicHcCloseModal() {
+            cicHcModalEl.classList.remove('cic-hc-open');
+            document.body.style.overflow = '';
+        }
+
+        function cicHcResetAll() {
+            cicHcSearchTerm = '';
+            cicHcSelectedEra = 'all';
+            cicHcSearchInputEl.value = '';
+            cicHcEraSelectEl.value = 'all';
+            cicHcRender();
+        }
+
+        // Eventos
+        document.addEventListener('click', (event) => {
+            const trigger = event.target.closest('[data-cic-hc-id]');
+            if (trigger) {
+                cicHcOpenModal(trigger.getAttribute('data-cic-hc-id'));
+            }
+        });
+
+        cicHcSearchInputEl.addEventListener('input', (e) => {
+            cicHcSearchTerm = e.target.value;
+            cicHcRender();
+        });
+
+        cicHcEraSelectEl.addEventListener('change', (e) => {
+            cicHcSelectedEra = e.target.value;
+            cicHcRender();
+        });
+
+        cicHcBtnGridEl.addEventListener('click', () => {
+            if (cicHcCurrentView === 'grid') return;
+            cicHcCurrentView = 'grid';
+            cicHcBtnGridEl.classList.add('cic-hc-active');
+            cicHcBtnGridEl.setAttribute('aria-pressed', 'true');
+            cicHcBtnTimelineEl.classList.remove('cic-hc-active');
+            cicHcBtnTimelineEl.setAttribute('aria-pressed', 'false');
+            cicHcRender();
+        });
+
+        cicHcBtnTimelineEl.addEventListener('click', () => {
+            if (cicHcCurrentView === 'timeline') return;
+            cicHcCurrentView = 'timeline';
+            cicHcBtnTimelineEl.classList.add('cic-hc-active');
+            cicHcBtnTimelineEl.setAttribute('aria-pressed', 'true');
+            cicHcBtnGridEl.classList.remove('cic-hc-active');
+            cicHcBtnGridEl.setAttribute('aria-pressed', 'false');
+            cicHcRender();
+        });
+
+        cicHcBtnClearEl.addEventListener('click', cicHcResetAll);
+        cicHcBtnEmptyResetEl.addEventListener('click', cicHcResetAll);
+
+        cicHcModalCloseTopEl.addEventListener('click', cicHcCloseModal);
+        cicHcModalCloseBottomEl.addEventListener('click', cicHcCloseModal);
+
+        cicHcModalEl.addEventListener('click', (e) => {
+            if (e.target === cicHcModalEl) {
+                cicHcCloseModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && cicHcModalEl.classList.contains('cic-hc-open')) {
+                cicHcCloseModal();
+            }
+        });
+
+        // Inicialización
+        window.onload = function () {
+            cicHcRender();
+        };
+    </script>
+</body>
+</html>
